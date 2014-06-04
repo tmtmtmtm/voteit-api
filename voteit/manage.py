@@ -18,7 +18,7 @@ def loadfile(file_name):
         data = json.load(fh)
         load_parties(data.get('parties', {}).values())
         load_people(data.get('people', {}).values())
-        load_motions(data)
+        load_motions(data.get('motions', []))
 
 @manager.command
 def loadpeople(file_name):
@@ -35,6 +35,13 @@ def loadparties(file_name):
         load_parties(data)
 
 @manager.command
+def loadmotions(file_name):
+    """ Load motions from a JSON file. """
+    with open(file_name, 'rb') as fh:
+        data = json.load(fh)
+        load_motions(data)
+
+@manager.command
 def reset():
     for coll in db.collection_names():
         if coll in ['issues', 'system.indexes', 'system.users']:
@@ -45,6 +52,13 @@ def reset():
 @manager.command
 def deleteissues():
     db.drop_collection(issues)
+
+@manager.command
+def deletemotions():
+    db.drop_collection('votes')
+    db.drop_collection('vote_counts')
+    db.drop_collection('vote_events')
+    db.drop_collection('motions')
 
 @manager.command
 def deletepeople():
