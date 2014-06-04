@@ -2,7 +2,7 @@ import json
 
 from flask.ext.script import Manager
 
-from voteit.core import db, issues
+from voteit.core import db
 from voteit.web import app
 from voteit.loader import reload_motions, bulk_load_motions
 from voteit.loader import reload_parties, bulk_load_parties
@@ -60,14 +60,10 @@ def bulkloadmotions(file_name):
 @manager.command
 def reset():
     for coll in db.collection_names():
-        if coll in ['issues', 'system.indexes', 'system.users']:
+        if coll in ['system.indexes', 'system.users']:
             continue
         print coll
         db.drop_collection(coll)
-
-@manager.command
-def deleteissues():
-    db.drop_collection(issues)
 
 @manager.command
 def deletemotions():
@@ -83,24 +79,6 @@ def deletepeople():
 @manager.command
 def deleteparties():
     db.drop_collection('parties')
-
-
-# todo: guarantee that motions exist...
-@manager.command
-def addtestissue():
-    db.issues.insert({
-        'title': 'Finnish Misogynist Union Stance',
-        'phrase': 'making homophobia, xenophobia and supressed anger an art form',
-        'motions': [{
-            'motion_id': 'motion-62-2012-1',
-            'weights': {'yes': 23}
-        }, {
-            'motion_id': 'motion-62-2012-2',
-            'weights': {'yes': -23}
-        }]
-    })
-
-
 
 def run():
     manager.run()
