@@ -76,8 +76,8 @@ A read-only API exposes the following end-points:
 An `aggregrate` API end-point is also provided that allows grouping and filtering of vote information. For example:
 
 To see vote counts by party on a given motion:
-*  GET /api/1/aggregate?motion=62-2012-1&bloc=party.id
+*  GET /api/1/aggregate?motion=62-2012-1&bloc=party_id
   
 Or how a specific party voted on a range of motions:
-*  GET /api/1/aggregate?motion=62-2012-1&motion=62-2012-2&filter=party.id:13
+*  GET /api/1/aggregate?motion=62-2012-1&motion=62-2012-2&filter=party_id:13
   
