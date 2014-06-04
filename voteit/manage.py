@@ -12,19 +12,19 @@ from voteit.loader import bulk_load_people
 manager = Manager(app)
 
 @manager.command
-def bulkloadpeople(file_name):
+def loadpeople(file_name):
     with open(file_name, 'rb') as fh:
         data = json.load(fh)
         bulk_load_people(data)
 
 @manager.command
-def bulkloadparties(file_name):
+def loadparties(file_name):
     with open(file_name, 'rb') as fh:
         data = json.load(fh)
         bulk_load_parties(data)
 
 @manager.command
-def bulkloadmotions(file_name):
+def loadmotions(file_name):
     with open(file_name, 'rb') as fh:
         data = json.load(fh)
         bulk_load_motions(data)
