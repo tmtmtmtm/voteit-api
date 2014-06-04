@@ -50,7 +50,7 @@ Data for people, parties, and votes, conforming to the relevant [Popolo specfica
 
 * ``people.json`` - Popolo person data for each person that has cast votes. ([Example](https://github.com/tmtmtmtm/eduskunta-popolo/blob/master/people.json))
 * ``parties.json`` - Popolo organization data for each person that has cast votes. ([Example](https://github.com/tmtmtmtm/eduskunta-popolo/blob/master/parties.json))
-* ``motions.json`` - Popolo motion data, with nested vote_events, vote_counts, and votes. ([Example](https://github.com/tmtmtmtm/eduskunta-popolo/blob/master/data/popolo/session-100.json))
+* ``motions.json`` - Popolo motion data, with nested vote_events, vote_counts, and votes. ([Example](https://github.com/tmtmtmtm/eduskunta-popolo/blob/master/data/popolo/2012/session-100.json))
 
 Each ``vote`` is expected to contain a ``party_id`` and ``voter_id`` that resolve against the people and party data.
 
