@@ -1,4 +1,4 @@
-# VoteIt Server
+# VoteIt API Server
 
 This is a server component for a VoteIt API — part of a suite of tools for managing parliamentary (or other) vote results. 
 
@@ -9,11 +9,11 @@ Before installing, make sure you have the following dependencies available on yo
 * MongoDB, ideally greater than 2.7.
 * Python 2.7 and [virtualenv](http://www.virtualenv.org/en/latest/)
 
-When you set up  ``voteit-server``, first check out the application from GitHub,
+When you set up  ``voteit-api``, first check out the application from GitHub,
 create a virtual environment and install the Python dependencies:
 
-    git clone https://github.com/pudo/voteit-server.git
-    cd voteit-server
+    git clone https://github.com/tmtmtmtm/voteit-api.git
+    cd voteit-api
     virtualenv env
     source env/bin/activate
     pip install -r requirements.txt
@@ -23,13 +23,13 @@ Next, you need to start MongoDB. For testing, you can simply run
 
     mongod --dbpath=/tmp
 
-You also need to configure ``voteit-server`` to point at this. Create a copy of the file ``voteit/default_settings.py``, as ``settings.py`` in the repository base, and change ``MONGODB_URI`` if required (the default should just work unless you've configured MongoDB differently).
+You also need to configure ``voteit-api`` to point at this. Create a copy of the file ``voteit/default_settings.py``, as ``settings.py`` in the repository base, and change ``MONGODB_URI`` if required (the default should just work unless you've configured MongoDB differently).
 
-Once the new configuration is set up, you need to set an environment variable to point ``voteit-server`` at the configuration file:
+Once the new configuration is set up, you need to set an environment variable to point ``voteit-api`` at the configuration file:
 
     export VOTEIT_SETTINGS=`pwd`/settings.py
 
-Finally, you can run ``voteit-server``. 
+Finally, you can run ``voteit-api``. 
 
     python voteit/manage.py runserver 
 
@@ -37,12 +37,12 @@ Test that it's working by visiting the URL it tells you it's running on.
 
 ## Day-to-day Development
 
-When developing voteit-server day-to-day, you'll need to run
+When developing voteit-api day-to-day, you'll need to run
 
     source env/bin/activate
 
 whenever you start a new shell. This tells Python to load the dependencies for
-voteit-server. It will place `(env)` at the start of your shell prompt.
+voteit-api. It will place `(env)` at the start of your shell prompt.
 
 ## Bulk loader format
 
@@ -56,7 +56,7 @@ Both ``people`` and ``parties`` are given as a dictionary in themselves, with th
 
 The ``motions`` data is expected to be a list of fully nested vote data, with a list of ``vote_events``, and ``votes`` within those. Each ``vote`` is expected to contain a ``option``, ``party_id`` and ``voter_id``. The latter two must resolve against the ``people`` and ``parties`` dictionaries specified in the root of the dictionary. 
 
-To import a bulk votes file, execute the following command from within the ``voteit-server`` virtualenv: 
+To import a bulk votes file, execute the following command from within the ``voteit-api`` virtualenv: 
 
     python voteit/manage.py loadfile <file.json>
 

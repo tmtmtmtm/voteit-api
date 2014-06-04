@@ -2,9 +2,9 @@ import os
 from setuptools import setup, find_packages
 
 setup(
-    name='voteit',
-    version='0.1',
-    description="VoteIT server",
+    name='voteit-api',
+    version='0.2',
+    description="voteit API server",
     long_description="",
     classifiers=[
         "Development Status :: 3 - Alpha",
@@ -14,7 +14,7 @@ setup(
     ],
     keywords='votes parliament',
     author='CodeCamp',
-    author_email='friedrich@pudo.org',
+    author_email='tony@micropiphany.com',
     url='',
     license='MIT',
     packages=find_packages(exclude=['ez_setup', 'examples', 'tests']),
