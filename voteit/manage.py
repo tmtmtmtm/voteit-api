@@ -4,42 +4,37 @@ from flask.ext.script import Manager
 
 from voteit.core import db, issues
 from voteit.web import app
-from voteit.loader import load_motions
-from voteit.loader import load_parties, load_people
+from voteit.loader import reload_motions
+from voteit.loader import reload_parties, reload_people
 
 
 manager = Manager(app)
 
-
 @manager.command
 def loadfile(file_name):
-    """ Load motions from a JSON file. """
     with open(file_name, 'rb') as fh:
         data = json.load(fh)
-        load_parties(data.get('parties', {}).values())
-        load_people(data.get('people', {}).values())
-        load_motions(data.get('motions', []))
+        reload_parties(data.get('parties', {}).values())
+        reload_people(data.get('people', {}).values())
+        reload_motions(data.get('motions', []))
 
 @manager.command
-def loadpeople(file_name):
-    """ Load people from a JSON file. """
+def reloadpeople(file_name):
     with open(file_name, 'rb') as fh:
         data = json.load(fh)
-        load_people(data)
+        reload_people(data)
 
 @manager.command
-def loadparties(file_name):
-    """ Load parties from a JSON file. """
+def reloadparties(file_name):
     with open(file_name, 'rb') as fh:
         data = json.load(fh)
-        load_parties(data)
+        reload_parties(data)
 
 @manager.command
-def loadmotions(file_name):
-    """ Load motions from a JSON file. """
+def reloadmotions(file_name):
     with open(file_name, 'rb') as fh:
         data = json.load(fh)
-        load_motions(data)
+        reload_motions(data)
 
 @manager.command
 def reset():

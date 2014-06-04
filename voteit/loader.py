@@ -4,21 +4,21 @@ from voteit.core import motions, vote_events
 from voteit.core import vote_counts, votes
 from voteit.core import persons, parties
 
-def load_people(data):
+def reload_people(data):
     for person in data:
         print "PER Loading: %s" % person.get('name')
         person['@type'] = 'Person'
         persons.update({'id': person.get('id')}, person, upsert=True)
 
 
-def load_parties(data):
+def reload_parties(data):
     for party in data:
         print "PTY Loading: %s" % party.get('name')
         party['@type'] = 'Party'
         parties.update({'id': party.get('id')}, party, upsert=True)
 
 
-def load_motions(data):
+def reload_motions(data):
     for motion in data:
         motion_id = motion.get('id') 
         print "Motion: %s" % motion_id
@@ -36,10 +36,10 @@ def load_motions(data):
                 vote_counts.update({'vote_event_id': vote_event_id, 'option': count.get('option')}, count, upsert=True)
 
             for vote in vote_event.get('votes'):
-                load_vote(vote, vote_event, motion, data)
+                reload_vote(vote, vote_event, motion, data)
 
 
-def load_vote(vote, vote_event, motion, data):
+def reload_vote(vote, vote_event, motion, data):
     vote['weight'] = 1
     vote['vote_event_id'] = vote_event.get('id')
     vote['motion_id'] = motion.get('id')
