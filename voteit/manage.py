@@ -30,7 +30,7 @@ def loadmotions(file_name):
         bulk_load_motions(data)
 
 @manager.command
-def reset():
+def deletealldata():
     for coll in db.collection_names():
         if coll in ['system.indexes', 'system.users']:
             continue
