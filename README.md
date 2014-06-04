@@ -46,19 +46,32 @@ voteit-api. It will place `(env)` at the start of your shell prompt.
 
 ## Bulk loader format
 
-Vote data, conforming to the relevant [Popolo specfication](http://popoloproject.com/specs/vote-event.html), can be loaded in bulk from a single JSON file. The file is expected to contain a dictionary with the following keys:
+Data for people, parties, and votes, conforming to the relevant [Popolo specfications](http://popoloproject.com/specs/vote-event.html), can be bulk-loaded JSON files. 
 
-* ``motions`` - the actual motions, vote event and votes data.
-* ``people`` - PopIt person data for each person that has cast votes.
-* ``parties`` - PopIt organization data for each person that has cast votes.
+* ``people.json`` - Popolo person data for each person that has cast votes. ([Example](https://github.com/tmtmtmtm/eduskunta-popolo/blob/master/people.json))
+* ``parties.json`` - Popolo organization data for each person that has cast votes. ([Example](https://github.com/tmtmtmtm/eduskunta-popolo/blob/master/parties.json))
+* ``motions.json`` - Popolo motion data, with nested vote_events, vote_counts, and votes. ([Example](https://github.com/tmtmtmtm/eduskunta-popolo/blob/master/data/popolo/session-100.json))
 
-Both ``people`` and ``parties`` are given as a dictionary in themselves, with the ID of each entity as the key, and their full representation as a value. 
+Each ``vote`` is expected to contain a ``party_id`` and ``voter_id`` that resolve against the people and party data.
 
-The ``motions`` data is expected to be a list of fully nested vote data, with a list of ``vote_events``, and ``votes`` within those. Each ``vote`` is expected to contain a ``option``, ``party_id`` and ``voter_id``. The latter two must resolve against the ``people`` and ``parties`` dictionaries specified in the root of the dictionary. 
+These files can be imported using:
 
-To import a bulk votes file, execute the following command from within the ``voteit-api`` virtualenv: 
+    python voteit/manage.py loadpeople <filename>
+    python voteit/manage.py loadparties <filename>
+    python voteit/manage.py loadmotions <filename>
 
-    python voteit/manage.py loadfile <file.json>
+These do bulk imports, and so will not replace or ignore pre-existing
+records, but issue an error.
+
+To clean out existing data first you can run:
+
+    python voteit/manage.py deletepeople
+    python voteit/manage.py deleteparties
+    python voteit/manage.py deletemotions
+
+or all three at once:
+
+    python voteit/manage.py deletealldata
 
 ## API Documentation
 
