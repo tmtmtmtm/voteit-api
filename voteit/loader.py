@@ -33,6 +33,28 @@ def bulk_load_motions(data):
                 vote['weight'] = vote.get('weight') or 1
                 vote['vote_event_id'] = vote_event_id
                 vote['motion_id'] = motion['_id']
+
+                # Ensure we have at least a skeleton party
+                # TODO add pre-defined attributes here
+                if not vote.get('party') and not vote.get('party_id'):
+                    raise Exception('Vote %s has no party or party_id' % vote['id'])
+                if not vote.get('party'):
+                    vote['party'] = { 'id': vote['party_id'] }
+                if not vote.get('party_id'):
+                    if not vote['party'].get('id'):
+                        raise Exception('party %s has no id' % vote['party'])
+                    vote['party_id'] = vote['party']['id']
+
+                # Ensure we have at least a skeleton voter 
+                if not vote.get('voter') and not vote.get('voter_id'):
+                    raise Exception('Vote %s has no voter or voter_id' % vote['id'])
+                if not vote.get('voter'):
+                    vote['voter'] = { 'id': vote['voter_id'] }
+                if not vote.get('voter_id'):
+                    if not vote['voter'].get('id'):
+                        raise Exception('voter %s has no id' % vote['voter'])
+                    vote['voter_id'] = vote['voter']['id']
+
             votes.insert(vote_event.get('votes'))
 
         vote_events.insert(motion.get('vote_events'))
