@@ -98,14 +98,14 @@ export VOTEIT_SETTINGS=`pwd`/heroku_settings.py
 heroku config:set VOTEIT_SETTINGS=/app/heroku_settings.py
 ```
 
+Then push your data, as above.
+
 ## API Documentation
 
 A read-only API exposes the following end-points:
  
 * GET /api/1/motions
 * GET /api/1/motion/`<motion_id>`
-* GET /api/1/vote_events
-* GET /api/1/vote_events/`<vote_event_id>`
 * GET /api/1/parties
 * GET /api/1/parties/`<party_id>`
 * GET /api/1/persons
