@@ -12,6 +12,11 @@ from bson.objectid import ObjectId
 # Issues API
 #-------
 
+# HERE BE DRAGONS!
+
+# This code is being split out into a separate package.
+# Don't rely on it!
+
 @app.route('/api/1/issues', methods=['GET'])
 @cross_origin(headers=['Content-Type'], methods=['GET', 'POST'])
 def list_issues():
