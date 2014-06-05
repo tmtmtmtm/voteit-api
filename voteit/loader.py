@@ -1,6 +1,6 @@
 from pprint import pprint
 
-from voteit.core import motions, vote_events, votes
+from voteit.core import motions, votes
 from voteit.core import persons, parties
 
 def bulk_load_people(data):
@@ -60,8 +60,6 @@ def bulk_load_motions(data):
                 vote['motion_id'] = motion['_id']
 
             votes.insert(vote_event.get('votes'))
-
-        vote_events.insert(motion.get('vote_events'))
 
     motions.insert(data)
 
