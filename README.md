@@ -80,6 +80,24 @@ or all three at once:
 
     python voteit/manage.py deletealldata
 
+## Deploying to Heroku
+
+The code should run cleanly on Heroku, and depending on your data, you
+should be able to store at least half a million individual vote records
+within their usage limits.
+
+To deploy, first install a MongoHQ sandbox from https://addons.heroku.com/
+
+Then:
+
+```
+heroku git:remote --app <your app name>
+git push heroku master
+export MONGOHQ_URL=`heroku config:get MONGOHQ_URL`
+export VOTEIT_SETTINGS=`pwd`/heroku_settings.py
+heroku config:set VOTEIT_SETTINGS=/app/heroku_settings.py
+```
+
 ## API Documentation
 
 A read-only API exposes the following end-points:
