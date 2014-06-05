@@ -61,13 +61,13 @@ These files can be imported using:
     python voteit/manage.py loadmotions <filename>
 
 It is presumed that your normal usage is 'append only' — i.e. that
-historic data will not change — you will simply be adding new data. As
-such these do bulk imports, and so will not replace or ignore
+historic data will not change — you will simply be adding new data. 
+Therefore, these do bulk imports, and so will not replace or ignore
 pre-existing records, but issue an error if clashes are detected.
 
 If you do need to change historic data, you can either write your own
 code to do that, or simply delete and recreate any data set (for
-the average Parliament, a complete `people.json` file will reload in
+the average Parliament, a complete ``people.json`` file will reload in
 a few seconds)
 
 To clean out existing data first you can run:

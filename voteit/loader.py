@@ -18,7 +18,7 @@ def bulk_load_parties(data):
 def bulk_load_motions(data):
     for motion in data:
         motion['_id'] = motion.get('id')
-        print "Inserting motion: %s" % motion['_id']
+        print "Handling motion: %s" % motion['_id']
 
         for vote_event in motion.get('vote_events'):
             # Short cut for 1:1 motion:vote_event cases
@@ -27,13 +27,8 @@ def bulk_load_motions(data):
             vote_event['id'] = vote_event_id
             vote_event['motion_id'] = motion['_id']
 
+            seen_votes = set()
             for vote in vote_event.get('votes'):
-                vote['_id'] = vote.get('id') or "V-%s-%s" % (vote_event_id, vote.get('voter_id'))
-                vote['id'] = vote['_id']
-                vote['weight'] = vote.get('weight') or 1
-                vote['vote_event_id'] = vote_event_id
-                vote['motion_id'] = motion['_id']
-
                 # Ensure we have at least a skeleton party
                 # TODO add pre-defined attributes here
                 if not vote.get('party') and not vote.get('party_id'):
@@ -54,6 +49,15 @@ def bulk_load_motions(data):
                     if not vote['voter'].get('id'):
                         raise Exception('voter %s has no id' % vote['voter'])
                     vote['voter_id'] = vote['voter']['id']
+
+                vote['_id'] = vote.get('id') or "V-%s-%s" % (vote_event_id, vote.get('voter_id'))
+                if vote['_id'] in seen_votes:
+                  raise Exception("Duplicate vote %s " % vote['_id'])
+                seen_votes.add(vote['_id'])
+                vote['id'] = vote['_id']
+                vote['weight'] = vote.get('weight') or 1
+                vote['vote_event_id'] = vote_event_id
+                vote['motion_id'] = motion['_id']
 
             votes.insert(vote_event.get('votes'))
 
