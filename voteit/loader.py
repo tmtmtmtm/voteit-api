@@ -1,7 +1,6 @@
 from pprint import pprint
 
-from voteit.core import motions, vote_events
-from voteit.core import vote_counts, votes
+from voteit.core import motions, vote_events, votes
 from voteit.core import persons, parties
 
 def bulk_load_people(data):
@@ -27,13 +26,6 @@ def bulk_load_motions(data):
             vote_event['_id'] = vote_event_id
             vote_event['id'] = vote_event_id
             vote_event['motion_id'] = motion['_id']
-
-            # Do we need these at all?
-            for vote_count in vote_event.get('counts'):
-                vote_count['_id'] = vote_count.get('id') or "VC-%s-%s" % (vote_event_id, vote_count.get('option'))
-                vote_count['id'] = vote_count['_id']
-                vote_count['vote_event_id'] = vote_event_id
-            vote_counts.insert(vote_event.get('counts'))
 
             for vote in vote_event.get('votes'):
                 vote['_id'] = vote.get('id') or "V-%s-%s" % (vote_event_id, vote.get('voter_id'))

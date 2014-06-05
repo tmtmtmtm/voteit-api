@@ -40,7 +40,6 @@ def deletealldata():
 @manager.command
 def deletemotions():
     db.drop_collection('votes')
-    db.drop_collection('vote_counts')
     db.drop_collection('vote_events')
     db.drop_collection('motions')
 
